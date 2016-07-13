@@ -24,7 +24,9 @@ class Statistics{
         $minOrderId = 0; 
         $maxOrderId = $this->getMaxOrderid(); 
         $totalNum = $this->getOrderNum();
+        echo "the biggest order_id:{$maxOrderId}\n";
         while($minOrderId!=$maxOrderId){
+            echo "already order_id:{$minOrderId}\n";
             $orderIdArr = $this->getOrderIdArr($minOrderId); 
             $minOrderId = end($orderIdArr);
             foreach($orderIdArr as $orderId){
