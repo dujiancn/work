@@ -28,7 +28,11 @@ class Statistics{
         while($minOrderId!=$maxOrderId){
             echo "already order_id:{$minOrderId}\n";
             $orderIdArr = $this->getOrderIdArr($minOrderId); 
-            $minOrderId = end($orderIdArr);
+            if(!empty($orderIdArr)){
+                $minOrderId = end($orderIdArr);
+            }else{
+                $minOrderId = $maxOrderId;
+            }
             foreach($orderIdArr as $orderId){
                 if(in_array($orderId,$this->repeatOrderidArr)){
                     continue;
