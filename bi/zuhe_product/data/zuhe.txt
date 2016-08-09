@@ -1,0 +1,1 @@
+product_id	subtour_code	subtour_code note	min_guest_num	max_guest_num	created202	USAN7-230;USANLA123-3540		1	4	2006-06-29 10:34:29

@@ -1,0 +1,1 @@
+parent_product_id	product_id	subtour_code	subtour_code note	min_guest_num	max_guest_num	created
