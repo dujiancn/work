@@ -10,6 +10,7 @@ class Statistics{
         $this->zuheChildFile = $zuheChildFile;
         //db 
         $this->tffDB = new mysqli("192.168.100.200","root","tufeng1801","tff_2014_06_24",3306);
+        $this->tffDB->query("set names utf8");
     }
 
     /**
@@ -19,7 +20,7 @@ class Statistics{
     public function findZuheProduct(){
         $productIdArr = $this->getProductIdArr();
         $zuheTitleArr = array("product_id","subtour_code","subtour_code note","min_guest_num","max_guest_num","created");
-        $zuheChildTitleArr = array("parent_product_id","product_id","subtour_code","subtour_code note","min_guest_num","max_guest_num","created");
+        $zuheChildTitleArr = array("parent_product_id","product_id","min_guest_num","max_guest_num","upgrade","departure");
         $line = implode("\t",$zuheTitleArr);
         file_put_contents($this->zuheFile,$line."\n");
         $line = implode("\t",$zuheChildTitleArr);
@@ -31,11 +32,14 @@ class Statistics{
             if(!empty($parentProductInfo)){
                 $line = implode("\t",$parentProductInfo);
                 file_put_contents($this->zuheFile,$line."\n",FILE_APPEND);
-                //获取被组合产品的详细信息
+                //获取组合子产品的详细信息
+                $line = "{$productId}\t";
                 foreach($subIdArr as $subId){
-                    $childProductInfo = $this->getChildProductInfo($productId);
-                    exit;
-                } 
+                    $childProductInfo = $this->getChildProductInfo($subId);
+                    $line .= implode("\t",$childProductInfo);
+                    file_put_contents($this->zuheChildFile,$line."\n",FILE_APPEND);
+                    $line = "\t";
+                }    
             }
         }
         return true;
@@ -68,7 +72,6 @@ class Statistics{
      **/
     private function getParentProductInfo($productId){
         $productInfo = array();
-//        $sql="select pd.time,pdd.region,pdd.address,pdd.full_address,pdd.tips from product_departure as pd left join product_departure_description as pdd on pd.product_departure_id=pdd.product_departure_id where pd.product_id=102 and pdd.address!=''";
         $sql = "select product_id,subcode,subcode_note,min_num_guest,max_num_guest,created
                 from `product`
                 where product_id={$productId}
@@ -95,13 +98,27 @@ class Statistics{
         while($query = mysqli_fetch_assoc($queryResult)){
             $productInfo = $query;
             unset($query,$queryResult);
-            $departureInfo = "";
-            $sql="select pd.time,pdd.region,pdd.address,pdd.full_address,pdd.tips from product_departure as pd left join product_departure_description as pdd on pd.product_departure_id=pdd.product_departure_id where pd.product_id=102 and pdd.address!=''";
+            $upgradesArr = array();
+            $upgradesInfo = "";
+            $sql = "select pa.product_option_id,pa.product_option_value_id, pod.name as pod_name, povd.name as povd_name from product_attribute as pa,product_option_description as pod,product_option_value_description as povd where pa.product_option_id=pod.product_option_id and pa.product_option_value_id=povd.product_option_value_id and pa.product_id={$productId} and pod.language_id=3 and povd.language_id=3 group by pa.product_option_id,pa.product_option_value_id;";
             $queryResult = $this->tffDB->query($sql);
             while($query = mysqli_fetch_assoc($queryResult)){
-                $departureArr[] = $query; 
+                $upgradesArr[] = $query; 
             }
-            $departureInfo = json_encode($departureArr,JSON_UNESCAPED_UNICODE);
+            $upgradesInfo = json_encode($upgradesArr,JSON_UNESCAPED_UNICODE);
+            $productInfo["upgrade"] = $upgradesInfo;
+            unset($query,$queryResult);
+            
+            $departuresArr = array();
+            $departuresInfo = "";
+            $sql = "select pd.time,pdd.region,pdd.address,pdd.full_address from product_departure as pd join product_departure_description as pdd where pd.product_id={$productId} and pd.product_departure_id=pdd.product_departure_id and pdd.language_id=3 order by pd.time;";
+            $queryResult = $this->tffDB->query($sql);
+            while($query = mysqli_fetch_assoc($queryResult)){
+                $departuresArr[] = $query; 
+            }
+            $departuresInfo = json_encode($departuresArr,JSON_UNESCAPED_UNICODE);
+            $productInfo["departure"] = $departuresInfo;
+            
             unset($query,$queryResult);
             break;
         }
