@@ -1,0 +1,1 @@
+product_type	product_id	product_name	start_city	visit_city	num	departure_date	end_date
