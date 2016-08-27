@@ -1,0 +1,1 @@
+product_id	product_name	adult_cost	child_cost	adult_retail	child_retail
