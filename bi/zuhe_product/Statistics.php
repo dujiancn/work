@@ -19,7 +19,7 @@ class Statistics{
      **/
     public function findZuheProduct(){
         $productIdArr = $this->getProductIdArr();
-        $zuheTitleArr = array("product_id","subtour_code","subtour_code note","min_guest_num","max_guest_num","created");
+        $zuheTitleArr = array("product_id","subtour_code","subtour_code note","subtour_code duration","min_guest_num","max_guest_num","created");
         $zuheChildTitleArr = array("parent_product_id","product_id","min_guest_num","max_guest_num","upgrade","departure");
         $line = implode("\t",$zuheTitleArr);
         file_put_contents($this->zuheFile,$line."\n");
@@ -72,7 +72,7 @@ class Statistics{
      **/
     private function getParentProductInfo($productId){
         $productInfo = array();
-        $sql = "select product_id,subcode,subcode_note,min_num_guest,max_num_guest,created
+        $sql = "select product_id,subcode,subcode_note,subcode_duration,min_num_guest,max_num_guest,created
                 from `product`
                 where product_id={$productId}
                 ";

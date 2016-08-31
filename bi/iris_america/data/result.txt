@@ -1,0 +1,2 @@
+customer_id	name	email	gender	telephone	city	province	country	total_consume	last_consume_time	last_consume_product
+677920	3 ddd	345@390.com	m	86-87945612311		Unknown	China		2015-01-30 11:04:34	24小时/48小时迈阿密观光车通票/Miami Hop-on Hop-off Sightseeing Tour

@@ -31,7 +31,6 @@ class Statistics{
         }
         //获取订单详情并写入文档
         foreach($utmOrderArr as $utmId => $orderArr){
-            $orderArr = array(220000,220002);
             //初始化    
             $orderDetailArr = array();
             $totalOrderNum = 0;
