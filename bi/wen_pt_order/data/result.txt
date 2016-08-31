@@ -1,0 +1,1 @@
+customer_name	customer_phone	customer_email	customer_number	city	agency_name	order_id	departure_date	creator	contact_type	tour_type	retail
