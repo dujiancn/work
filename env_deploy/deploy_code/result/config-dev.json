@@ -1,0 +1,8 @@
+{
+    "apiUrl": "http://trest.dev1.tff.com/",
+    "alipay_callback_url": "http://qa.toursforfun.com/cart/appAlipay",
+	"new_alipay_callback_url": "http://payment.qa.toursforfun.com/notify/alipay",
+	"cdnUrl": "http://dn-toursforfunqa.qbox.me/images/",
+	"account_url": "http://account.qa.toursforfun.com",
+	"platform": {"android": null, "ios": null}
+}
