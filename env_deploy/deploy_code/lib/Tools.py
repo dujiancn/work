@@ -76,7 +76,7 @@ class Tools:
                     print "assign key %s" %key
                     value = self.__replace_variable(key)
                     if '' == value.strip():
-                        raise Exception("the key:%s value is not found!")%key
+                        raise Exception("the key:%s value is not found!" %key)
                     pattern = re.compile('@@(.*)@@')
                     line = re.sub(pattern, value, line)
                 temp_fh.write(line)
