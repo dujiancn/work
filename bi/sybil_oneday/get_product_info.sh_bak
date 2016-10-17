@@ -1,0 +1,9 @@
+#!/bin/sh
+
+file_name="./product_id.txt"
+
+while read line
+do
+    sql="select count(*) as num from order_product where product_id=$line and order_item_purchase_date>\"2016-09-10\""
+    mysql -htoursforfunread.mysql.db.ctripcorp.com -P55944 -uuws_tours4fun_r --default-character-set=utf8 -p$passwd -A tffdb -e "$sql"
+done < $file_name
