@@ -15,11 +15,12 @@ class Statistics{
      * @brief   find result file and result child file
      * @return  bool
      **/
-    public function getNewzealan($startDate,$endDate){
+    public function getNewzealand($startDate,$endDate){
         $titleArr = array("order_id","retail","person_num","created","product_id","product_name");        
         $titleStr = implode("\t",$titleArr);
         file_put_contents($this->resultFile,$titleStr."\n"); 
         $orderProductIdArr = $this->getOrderProductIdArr($startDate,$endDate);
+        var_dump($orderProductIdArr);exit;
         foreach($orderProductIdArr as $one){
             $orderId = $one["order_id"];
             $retail = $one["retail"];
@@ -54,10 +55,11 @@ class Statistics{
                 $orderIdArr[] = $query["order_id"];
             }
         }
+        
         //get order info
         foreach($orderIdArr as $orderId){
             $one = array();
-            $sql = "select o.order_id,ot.total as retail, o.created 
+            $sql = "select o.order_id,ot.value as retail, o.created 
                     from `order` as o
                     left join `order_total` as ot on o.order_id=ot.order_id
                     where o.order_id={$orderId}
@@ -74,6 +76,7 @@ class Statistics{
                 $sql = "select total_room_adult_child_info, product_id, product_name
                         from order_product
                         where order_id={$orderId}";
+                $queryResult = $this->tffDB->query($sql);
                 $personNum = 0;
                 while($query = mysqli_fetch_assoc($queryResult)){
                     if(isset($query["total_room_adult_child_info"])){

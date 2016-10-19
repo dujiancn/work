@@ -18,3 +18,13 @@ where o.customer_email="alitrip@toursforfun.cn"
 and o.created>'2016-01-01'
 and o.created<'2016-10-01'
 and opcra.type='retail';
+
+#get product departure date
+select order_id,product_id,product_name,product_departure_date 
+from order_product where order_id in
+(select order_id from `order` where customer_email="alitrip@toursforfun.cn"  and created>'2016-01-01' and created<'2016-10-01');
+
+#get reference comment
+select order_id,reference_comments 
+from order_settlement_information where order_id in
+(select order_id from `order` where customer_email="alitrip@toursforfun.cn"  and created>'2016-01-01' and created<'2016-10-01');
