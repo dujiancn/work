@@ -11,7 +11,7 @@ class Statistics{
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         //db 
-        $this->tffDB = new mysqli("toursforfunread.mysql.db.ctripcorp.com","uws_tours4fun_r","hslxk96rvardr[idLvjZ","tffdb",55944);
+        $this->tffDB = new mysqli();
         $this->tffDB->query("set names utf8");
     }
 

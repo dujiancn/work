@@ -8,10 +8,10 @@ class Statistics{
     public function __construct($resultFile){
         $this->resultFile = $resultFile;
         //tffdb 
-        $this->tffDB = new mysqli("toursforfunread.mysql.db.ctripcorp.com","uws_tours4fun_r","hslxk96rvardr[idLvjZ","tffdb",55944);
+        $this->tffDB = new mysqli();
         $this->tffDB->query("set names utf8");
         //app
-        $this->appDB = new mysqli("tffappread.mysql.db.ctripcorp.com","uws_tffapp_r","Vkq4vzwwtzp{hr8Rkffk","tffappdb",55944);
+        $this->appDB = new mysqli();
         $this->appDB->query("set names utf8");
     }
 

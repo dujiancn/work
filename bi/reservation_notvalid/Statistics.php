@@ -9,8 +9,7 @@ class Statistics
     {
         $this->resultFile = $resultFile;
         //db 
-        $this->tffDB = new mysqli("toursforfunread.mysql.db.ctripcorp.com", "uws_tours4fun_r", "hslxk96rvardr[idLvjZ",
-            "tffdb", 55944);
+        $this->tffDB = new mysqli();
         $this->tffDB->query("set names utf8");
         //init
         $titleArr = array("订单id", "购买日期", "产品id", "产品名称", "出发时间", "供应商id", "供应商名称");
